@@ -10,7 +10,7 @@ def download(url):
     options = {
         'cookiesfrombrowser': ('chrome',),
         'outtmpl': path,
-        'format' : 'bestvideo[vcodec^=avc1] + bestaudio[acodec^=mp4a]',
+        'format' : 'bestvideo[vcodec^=avc1] + bestaudio[acodec^=mp4a]/best',
         'noplaylist':True,
         'merge_output_format':'mp4',
         'postprocessors':[{
