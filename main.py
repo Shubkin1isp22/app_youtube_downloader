@@ -1,12 +1,22 @@
-import yt_dlp, re
+import re, os
 from yt_dlp import YoutubeDL
 import customtkinter as tk
 
 
 def download(url):
     print("Download is run")
+    home_path = os.path.expanduser('~/Desktop')
+    path = os.path.join(home_path, "video_downloads", '%(title)s.%(ext)s')
     options = {
         'cookiesfrombrowser': ('chrome',),
+        'outtmpl': path,
+        'format' : 'bestvideo[vcodec^=avc1] + bestaudio[acodec^=mp4a]',
+        'noplaylist':True,
+        'merge_output_format':'mp4',
+        'postprocessors':[{
+            'key': 'FFmpegVideoConvertor',
+            'preferedformat':'mp4'
+        }]
     }
     yt = YoutubeDL(options)
     if is_url(url):
