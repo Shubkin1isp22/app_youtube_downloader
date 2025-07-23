@@ -1,7 +1,7 @@
-import re, os
+import re, os, threading
 from yt_dlp import YoutubeDL
 import customtkinter as tk
-
+from threading import Thread
 
 def download(url):
     print("Download is run")
@@ -20,35 +20,32 @@ def download(url):
     }
     yt = YoutubeDL(options)
     if is_url(url):
-
         try:    
             with yt as video:
                 video.download(url)
         except Exception as e:
             print(f"Ошибочка: ",{e})
 
+def thread_download(url):
+    new_potok = threading.Thread(target=download, args=(url,))
+    new_potok.start()
+
 def is_url(url):
     print("IS_URL running")
     if bool(re.match('https://', url)):
-        box_close()
+        clear_label()
         return True
-    f_error_box()
+    f_error_label()
     return False
     
+def clear_label():
+    text_error.set("")
+    input.delete(0, "end")
+    print("Is clear")
 
-def box_close():
-    error_box.configure(state='normal')
-    error_box.destroy()
-    print("box is closed")
+def f_error_label():
+    text_error.set("Ссылка не корректна")
 
-def f_error_box():
-    print("error_box is running")
-    text_error_url = "Вы ввели некорректную ссылку.\nПример корректной ссылки:\nhttps://www.youtube.com/watch?v=YIEvDwq41OY\n"
-    error_box.insert("1.0", text_error_url)
-    error_box.get("1.0", "end")
-    error_box.configure(state='disabled')
-    error_box.pack(pady = (15,0))
-    print("error_box is end")
 
 
 
@@ -62,12 +59,17 @@ win.configure(fg_color="#FCE6E6")
 input = tk.CTkEntry(win, border_color="#FFD1D1", placeholder_text="Введите ссылку:")
 input.pack(pady=(20,5), anchor = "center")
 
-button = tk.CTkButton(win, text= "Скачать", command=lambda: download(input.get()))
+button = tk.CTkButton(win, text= "Скачать", command=lambda: thread_download(input.get()))
 button.pack(pady=5)
 
 label = tk.CTkLabel(win, text = "by shekspii", text_color="grey")
 label.pack(side = "bottom", pady = 5)
 
-error_box = tk.CTkTextbox(win, width=260, height=80, text_color="red", activate_scrollbars=False)
+text_error = tk.StringVar()
+text_error.set("")
+error_label = tk.CTkLabel(win, width=200, height=25, text_color="red",textvariable=text_error)
+error_label.pack(pady = (5,5))
+
+
 print("Programm is run")
 win.mainloop()
