@@ -20,7 +20,7 @@ def download(url):
     }
     yt = YoutubeDL(options)
     if is_url(url):
-        
+
         try:    
             with yt as video:
                 video.download(url)
@@ -30,12 +30,16 @@ def download(url):
 def is_url(url):
     print("IS_URL running")
     if bool(re.match('https://', url)):
+        box_close()
         return True
     f_error_box()
     return False
     
 
-
+def box_close():
+    error_box.configure(state='normal')
+    error_box.destroy()
+    print("box is closed")
 
 def f_error_box():
     print("error_box is running")
