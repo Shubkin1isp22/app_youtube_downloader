@@ -2,6 +2,7 @@ import re, os, threading
 from yt_dlp import YoutubeDL
 import customtkinter as tk
 from threading import Thread
+from tkinter import filedialog
 
 def download(url):
     print("Download is run")
@@ -46,7 +47,11 @@ def clear_label():
 def f_error_label():
     text_error.set("Ссылка не корректна")
 
-
+def choose_directory():
+    folder_path = filedialog.askdirectory()
+    if folder_path:
+        path_input.delete(0, "end")
+        path_text.set(folder_path)
 
 
 tk.set_default_color_theme("dark-blue")
@@ -65,11 +70,22 @@ button.pack(pady=5)
 label = tk.CTkLabel(win, text = "by shekspii", text_color="grey")
 label.pack(side = "bottom", pady = 5)
 
+# Label для вывода ошибки при неверном url
 text_error = tk.StringVar()
 text_error.set("")
 error_label = tk.CTkLabel(win, width=200, height=25, text_color="red",textvariable=text_error)
 error_label.pack(pady = (5,5))
 
+# Input для ввода пути сохранения видео
+desktop_path = os.path.expanduser("~/Desktop")
+user_path = os.path.join(desktop_path, "video_downloads","")
+path_text = tk.StringVar()
+path_text.set(user_path)
+path_input = tk.CTkEntry(win, textvariable=path_text, width=250, font=("Arial", 11), justify="left")
+path_input.pack(side='bottom',pady=(5,45))
 
+# Кнопка для срабатывания askdirectory
+button_path = tk.CTkButton(win, width=250,text="Выбрать путь сохранения", command=choose_directory)
+button_path.pack(side='bottom',pady=5)
 print("Programm is run")
 win.mainloop()
