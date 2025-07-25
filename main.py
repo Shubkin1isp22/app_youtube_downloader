@@ -7,7 +7,7 @@ from tkinter import filedialog
 def download(url):
     print("Download is run")
     home_path = os.path.expanduser('~/Desktop')
-    path = os.path.join(home_path, "video_downloads", '%(title)s.%(ext)s')
+    path = os.path.join(path_text.get(), '%(title)s.%(ext)s')
     options = {
         'cookiesfrombrowser': ('chrome',),
         'outtmpl': path,
@@ -78,7 +78,7 @@ error_label.pack(pady = (5,5))
 
 # Input для ввода пути сохранения видео
 desktop_path = os.path.expanduser("~/Desktop")
-user_path = os.path.join(desktop_path, "video_downloads","")
+user_path = os.path.join(desktop_path, "video_downloads")
 path_text = tk.StringVar()
 path_text.set(user_path)
 path_input = tk.CTkEntry(win, textvariable=path_text, width=250, font=("Arial", 11), justify="left")
