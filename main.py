@@ -6,7 +6,6 @@ from tkinter import filedialog
 
 def download(url):
     print("Download is run")
-    home_path = os.path.expanduser('~/Desktop')
     path = os.path.join(path_text.get(), '%(title)s.%(ext)s')
     options = {
         'cookiesfrombrowser': ('chrome',),
@@ -53,7 +52,7 @@ def choose_directory():
         path_input.delete(0, "end")
         path_text.set(folder_path)
 
-
+tk.set_appearance_mode("light")
 tk.set_default_color_theme("dark-blue")
 
 win = tk.CTk()
