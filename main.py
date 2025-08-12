@@ -117,6 +117,7 @@ segmented_button = tk.CTkSegmentedButton(win, values=["Видео и аудио"
 segmented_button.set("Видео и аудио")
 segmented_button.pack(pady=5)
 
+# Строка с данными формата 
 format = tk.StringVar()
 format.set('bestvideo + bestaudio/best')
 format_label = tk.CTkLabel(win, textvariable=format)
